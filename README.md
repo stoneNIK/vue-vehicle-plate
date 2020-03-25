@@ -1,4 +1,4 @@
-# vue-car-plate
+# vue-vehicle-plate
 基于H5项目的一个车牌号码输入组件，支持新能源车牌号输入
 
 A vehicle license plate number keyboard
