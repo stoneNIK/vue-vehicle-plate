@@ -1,17 +1,19 @@
 {
   "name": "vue-vehicle-plate",
-  "version": "1.0.4",
+  "version": "1.0.1",
   "main": "src/vue-vehicle-plate/index.js",
-  "repository": "https://github.com/stoneNIK/vue-car-plate.git",
+  "repository": "https://github.com/stoneNIK/vue-vehicle-plate.git",
   "author": "[stoneNIK] <[stonenik@163.com]>",
   "license": "MIT",
   "scripts": {
     "package": "vue-cli-service build --target lib --name vue-vehicle-plate ./src/vue-vehicle-plate/index.js"
   },
-  "devDependencies": {
-    "@vue/cli": "^4.2.3",
-    "@vue/cli-service": "^4.2.3",
+  "dependencies": {
     "less": "^3.11.1",
     "less-loader": "^5.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli": "^4.2.3",
+    "@vue/cli-service": "^4.2.3"
   }
 }

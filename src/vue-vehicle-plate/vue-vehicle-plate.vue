@@ -110,7 +110,8 @@ export default {
     limitCity: {
       type: String,
       default: ""
-    } // 限制城市列表， 不用间隔
+    }, // 限制城市列表， 不用间隔
+    checkKeyBoardMap: Function // 更新键盘时，验证按键列表的数据，return iptKeyList
   },
   data() {
     return {
@@ -251,26 +252,32 @@ export default {
 
       /** 第1位 省份选择 只有省份简称列表可选 */
       if (keyboardType === 1) {
-        this.iptKeyList = ProvinceList.map(e => ({
-          key: e,
-          disabled: this.checkProvinceDisabled(e)
-        }));
+        return {
+          iptKeyList: ProvinceList.map(e => ({
+            key: e,
+            disabled: this.checkProvinceDisabled(e)
+          }))
+        };
       }
 
       /** 第2位 区号选择 英文字母+数字 数字和I不可选 */
       if (keyboardType === 2) {
-        this.iptKeyList = NumberList.concat(LetterList).map(e => ({
-          key: e,
-          disabled: this.checkCityDisabled(e)
-        }));
+        return {
+          iptKeyList: NumberList.concat(LetterList).map(e => ({
+            key: e,
+            disabled: this.checkCityDisabled(e)
+          }))
+        };
       }
 
       /** 第3-6位 序号选择 英文字母+数字 I、O不可选 */
       if (keyboardType === 3) {
-        this.iptKeyList = NumberList.concat(LetterList).map(e => ({
-          key: e,
-          disabled: e === "I" || e === "O"
-        }));
+        return {
+          iptKeyList: NumberList.concat(LetterList).map(e => ({
+            key: e,
+            disabled: e === "I" || e === "O"
+          }))
+        };
       }
 
       /** 第7位 序号选择 英文字母+数字+特殊字符切换（'学挂警'） I、O不可选 */
@@ -279,25 +286,34 @@ export default {
         // 第三排最后一个字符插入'字',点击之后弹出'学挂警'三个可选字符按钮
         iptKeyList.splice(29, 0, "字");
 
-        this.iptKeyList = iptKeyList.map(e => ({
-          key: e,
-          disabled: e === "I" || e === "O"
-        }));
-        this.showAdditionList = false;
+        return {
+          iptKeyList: iptKeyList.map(e => ({
+            key: e,
+            disabled: e === "I" || e === "O"
+          })),
+          showAdditionList: false
+        };
       }
 
       /** 第8位 新能源车最后一位选择 英文字母+数字 I、O不可选 */
       if (keyboardType === 5) {
-        this.iptKeyList = NumberList.concat(LetterList).map(e => ({
-          key: e,
-          disabled: e === "I" || e === "O"
-        }));
+        return {
+          iptKeyList: NumberList.concat(LetterList).map(e => ({
+            key: e,
+            disabled: e === "I" || e === "O"
+          }))
+        };
       }
     }
   },
   watch: {
     activeIndex: function() {
-      this.getKeyBoardList();
+      let { iptKeyList, showAdditionList } = this.getKeyBoardList();
+      if (this.checkKeyBoardMap) {
+        iptKeyList = this.checkKeyBoardMap(iptKeyList, this.plateNum, this.activeIndex);
+      }
+      this.iptKeyList = iptKeyList;
+      this.showAdditionList = !!showAdditionList;
     },
     plateNum: function() {
       const plateNum = this.plateNum;

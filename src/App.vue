@@ -18,6 +18,7 @@
     <section class="plate-wrap" v-show="showLayer">
       <vue-vehicle-plate
         :init-value="initPlateNumber"
+        :checkKeyBoardMap="checkKeyBoardMap"
         @confirm="onConfirmPlate"
       ></vue-vehicle-plate>
       <div class="plate-backdrop" @click="showLayer = false"></div>
@@ -39,6 +40,12 @@ export default {
       console.log(e);
       this.initPlateNumber = e.plateNumFor;
       this.showLayer = false;
+    },
+    checkKeyBoardMap(iptKeyList, plateNum, activeIndex) {
+      if (plateNum[0] == "贵" && activeIndex == 1) {
+        return iptKeyList.map(e => ({ ...e, disabled: e.key === "A" }));
+      }
+      return iptKeyList;
     }
   }
 };
