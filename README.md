@@ -14,13 +14,13 @@ vue2.x
 ### NPM
 
 ```shell
-$ npm install vue-vehicle-plate -D
+$ npm install vue-vehicle-plate --save
 ```
 
 ### yarn
 
 ```shell
-$ yarn add vue-vehicle-plate --save
+$ yarn add vue-vehicle-plate
 ```
 
 # Usage
